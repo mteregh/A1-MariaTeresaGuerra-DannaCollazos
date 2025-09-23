@@ -1,0 +1,9 @@
+1. Como usuario quiero poder crear una cuenta para poder identificarme dentro de la plataforma y guardar mis datos.
+2. Como usuario quiero poder iniciar sesión para poder ingresar a la plataforma.
+3. Como usuario autenticado quiero poder ver los challenges existentes para poder obtener información sobre cada uno.
+4. Como usuario autenticado quiero poder inscribirme en un challenge para poder participar de este mismo.
+5. Como usuario autenticado quiero poder inscribir mis actividades dentro de un Challenge para llevar registro de mis avances.
+6. Como usuario autenticado quiero poder ver la cantidad de puntos que llevo acumulados en un Challenge para saber mi progeso en ese Challenge.
+7. Como usuario autenticado y participante de un Challenge quiero poder ver los participantes que tienen más puntos acumulados dentro del Challenge para saber mi desempeño respecto al resto de los participantes.
+8. Como usuario creador de Challenges quiero poder crear un Challenge con un objetivo claro, duración, fecha de inicio, fecha de termino y sistema de puntos para que otros usuarios puedan unirse y participar.
+9. 
