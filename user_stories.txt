@@ -6,4 +6,6 @@
 6. Como usuario autenticado quiero poder ver la cantidad de puntos que llevo acumulados en un Challenge para saber mi progeso en ese Challenge.
 7. Como usuario autenticado y participante de un Challenge quiero poder ver los participantes que tienen más puntos acumulados dentro del Challenge para saber mi desempeño respecto al resto de los participantes.
 8. Como usuario creador de Challenges quiero poder crear un Challenge con un objetivo claro, duración, fecha de inicio, fecha de termino y sistema de puntos para que otros usuarios puedan unirse y participar.
-9. 
+9. Como administrador quiero poder ver todos los recursos de la aplicación, usuarios, challenges y sus detalles, para poder revisar que sigan las normas de convivencia.
+10. Como usuario autenticado quiero poder ver las insignias (badges) obtenidas para saber que objetivos he cumplido de la plataforma.
+11. Como usuario autenticado quiero poder recibir notificaciones sobre los Challenges que estoy inscrito para estar al tanto de las últimas actualizaciones de los mismos.
