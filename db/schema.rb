@@ -10,9 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_24_003849) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_24_014822) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "challenges", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.date "start"
+    t.date "end"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_challenges_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email"
@@ -23,4 +34,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_24_003849) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_foreign_key "challenges", "users"
 end
