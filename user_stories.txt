@@ -1,11 +1,11 @@
-1. Como usuario quiero poder crear una cuenta para poder identificarme dentro de la plataforma y guardar mis datos.
-2. Como usuario quiero poder iniciar sesión para poder ingresar a la plataforma.
-3. Como usuario autenticado quiero poder ver los challenges existentes para poder obtener información sobre cada uno.
-4. Como usuario autenticado quiero poder inscribirme en un challenge para poder participar de este mismo.
-5. Como usuario autenticado quiero poder inscribir mis actividades dentro de un Challenge para llevar registro de mis avances.
-6. Como usuario autenticado quiero poder ver la cantidad de puntos que llevo acumulados en un Challenge para saber mi progeso en ese Challenge.
-7. Como usuario autenticado y participante de un Challenge quiero poder ver los participantes que tienen más puntos acumulados dentro del Challenge para saber mi desempeño respecto al resto de los participantes.
-8. Como usuario creador de Challenges quiero poder crear un Challenge con un objetivo claro, duración, fecha de inicio, fecha de termino y sistema de puntos para que otros usuarios puedan unirse y participar.
-9. Como administrador quiero poder ver todos los recursos de la aplicación, usuarios, challenges y sus detalles, para poder revisar que sigan las normas de convivencia.
-10. Como usuario autenticado quiero poder ver las insignias (badges) obtenidas para saber que objetivos he cumplido de la plataforma.
-11. Como usuario autenticado quiero poder recibir notificaciones sobre los Challenges que estoy inscrito para estar al tanto de las últimas actualizaciones de los mismos.
+1. As a user, I want to be able to create an account so that I can identify myself within the platform and save my data.
+2. As a user, I want to be able to log in so that I can access the platform.
+3. As an authenticated user, I want to be able to view the existing challenges so that I can get information about each one.
+4. As an authenticated user, I want to be able to enroll in a challenge so that I can participate in it.
+5. As an authenticated user, I want to be able to record my activities within a challenge so that I can keep track of my progress.
+6. As an authenticated user, I want to be able to see the number of points I have accumulated in a challenge so that I know my progress in that challenge.
+7. As an authenticated user and challenge participant, I want to be able to see the participants who have the most accumulated points in the challenge so that I can compare my performance with the rest of the participants.
+8. As a challenge creator, I want to be able to create a challenge with a clear objective, duration, start date, end date, and points system so that other users can join and participate.
+9. As an administrator, I want to be able to view all the application resources, including users, challenges, and their details, so that I can ensure they follow the community guidelines.
+10. As an authenticated user, I want to be able to view the badges I have obtained so that I know which goals I have achieved on the platform.
+11. As an authenticated user, I want to be able to receive notifications about the challenges I am enrolled in so that I stay up to date with the latest updates.
