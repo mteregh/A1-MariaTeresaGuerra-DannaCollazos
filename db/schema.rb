@@ -10,9 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_24_014822) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_24_020005) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "challenge_participations", force: :cascade do |t|
+    t.bigint "challenge_id", null: false
+    t.bigint "user_id", null: false
+    t.integer "total_points"
+    t.datetime "joined_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["challenge_id"], name: "index_challenge_participations_on_challenge_id"
+    t.index ["user_id"], name: "index_challenge_participations_on_user_id"
+  end
 
   create_table "challenges", force: :cascade do |t|
     t.string "name"
@@ -35,5 +46,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_24_014822) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "challenge_participations", "challenges"
+  add_foreign_key "challenge_participations", "users"
   add_foreign_key "challenges", "users"
 end
