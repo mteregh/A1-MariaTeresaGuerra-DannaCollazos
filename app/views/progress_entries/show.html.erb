@@ -1,0 +1,10 @@
+<h1>Progress Entry <%= @progress_entry.id %></h1>
+<div class="card">
+  <div class="card-body">
+    <ul class="list-group">
+      <li class="list-group-item"><strong>Challenge:</strong> <%= link_to "Challenge #{@progress_entry.challenge.id}", @progress_entry.challenge %></li>
+      <li class="list-group-item"><strong>Quantity:</strong> <%= @progress_entry.quantity %></li>
+    </ul>
+  </div>
+  <%= link_to "Progress Entries", progress_entries_path %>
+</div>

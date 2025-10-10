@@ -21,6 +21,7 @@ challenge_creator.save
 
 (1..10).each do |num|
   badge = Badge.new
+  badge.name = "Badge #{num}"
   badge.save
 end
 

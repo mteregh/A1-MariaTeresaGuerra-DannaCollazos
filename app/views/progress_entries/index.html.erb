@@ -1,0 +1,19 @@
+<h1>Progress Entries</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Challenge</th>
+      <th scope="col">Quantity</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @progress_entries.each do |progress_entry| %>
+      <tr>
+        <td><%= link_to "Challenge #{progress_entry.challenge.id}", progress_entry.challenge %></td>
+        <td><%= progress_entry.quantity %></td>
+        <td><%= link_to "Show", progress_entry %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

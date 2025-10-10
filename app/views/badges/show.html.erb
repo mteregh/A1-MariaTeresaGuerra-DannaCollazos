@@ -1,0 +1,11 @@
+<h1>Badges#show</h1>
+<div class="card">
+  <div class="card-body">
+    <ul class="list-group">
+      <li class="list-group-item"><strong>Name:</strong> <%= @badge.name %></li>
+      <li class="list-group-item"><strong>Created at:</strong> <%= @badge.created_at %></li>
+      <li class="list-group-item"><strong>Updated at:</strong> <%= @badge.updated_at %></li>
+    </ul>
+    <%= link_to "Badges", badges_path %>
+  </div>
+</div>

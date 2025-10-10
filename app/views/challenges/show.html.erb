@@ -1,2 +1,18 @@
-<h1>Challenges#show</h1>
-<p>Find me in app/views/challenges/show.html.erb</p>
+<h1>Challenge <%= @challenge.id %></h1>
+<div class="card">
+  <div class="card-body">
+    <ul class="list-group">
+      <li class="list-group-item"><strong>Start:</strong> <%= @challenge.start %></li>
+      <li class="list-group-item"><strong>End:</strong> <%= @challenge.end %></li>
+      <li class="list-group-item"><strong>Description:</strong> <%= @challenge.description %></li>
+      <li class="list-group-item"><strong>Created at:</strong> <%= @challenge.created_at %></li>
+      <li class="list-group-item"><strong>Updated at:</strong> <%= @challenge.updated_at %></li>
+    </ul>
+    <h3>Progress Entries:</h3>
+    <ul class="list-group">
+      <% @challenge.progress_entries.each do |entry| %>  
+        <li class="list-group-item"><%= entry.quantity %></li>
+      <% end %>
+  </div>
+  <%= link_to "Challenges", challenges_path %>
+</div>
