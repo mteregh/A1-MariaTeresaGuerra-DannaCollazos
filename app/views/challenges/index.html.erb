@@ -1,0 +1,21 @@
+<h1>Challenges</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Start</th>
+      <th scope="col">End</th>
+      <th></th>
+    </tr>
+  </thead>
+  <% @challenges.each do |challenge| %>
+    <tr>
+      <td><%= challenge.name %></td>
+      <td><%= challenge.start %></td>
+      <td><%= challenge.end %></td>
+      <td><%= link_to "Show", challenge %></td>
+    </tr>
+  <% end %>
+  <tbody>
+  </tbody>
+</table>
