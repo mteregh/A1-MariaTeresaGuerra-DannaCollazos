@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_24_022640) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_10_212810) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -39,6 +39,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_24_022640) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_challenges_on_user_id"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.text "content"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
   create_table "progress_entries", force: :cascade do |t|
@@ -72,6 +80,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_24_022640) do
   add_foreign_key "challenge_participations", "challenges"
   add_foreign_key "challenge_participations", "users"
   add_foreign_key "challenges", "users"
+  add_foreign_key "notifications", "users"
   add_foreign_key "progress_entries", "challenges"
   add_foreign_key "user_badges", "badges"
   add_foreign_key "user_badges", "users"
