@@ -1,2 +1,30 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<h1 class="h4 mb-3"><%= [@user.first_name, @user.last_name].compact.join(" ") %></h1>
+
+<div class="card mb-3">
+  <div class="card-body">
+    <p><strong>Email:</strong> <%= @user.email %></p>
+    <p><strong>Rol:</strong> <%= @user.role || "—" %></p>
+  </div>
+</div>
+
+<h2 class="h5">Badges</h2>
+<% if @user.badges.any? %>
+  <ul>
+    <% @user.badges.each do |badge| %>
+      <li><%= badge.name %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="text-muted">Sin badges asignados.</p>
+<% end %>
+
+<h2 class="h5 mt-4">Challenges</h2>
+<% if @user.challenges.any? %>
+  <ul>
+    <% @user.challenges.each do |challenge| %>
+      <li><%= link_to challenge.name, challenge_path(challenge) %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="text-muted">No participa en ningún challenge.</p>
+<% end %>
