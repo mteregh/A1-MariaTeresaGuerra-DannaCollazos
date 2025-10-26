@@ -9,32 +9,66 @@
 #   end
 #
 
-(1..6).each do |num|
-  user = User.create(email: "email#{num}@gmail.com", first_name: "User number: #{num}", last_name: "Last name")
-  user.save
-end
 
-admin = User.create(email: 'admin@gmail.com', first_name: 'Admin', last_name: 'Admin', role: 'admin')
-admin.save
-challenge_creator = User.create(email: 'challenge_creator@gmail.com', first_name: 'Challenge', last_name: 'Creator', role: 'challenge-creator')
-challenge_creator.save
+ActiveRecord::Base.transaction do
 
-(1..10).each do |num|
-  badge = Badge.new
-  badge.name = "Badge #{num}"
-  badge.save
-end
-
-(1..5).each do |num|
-  challenge = Challenge.create(user: challenge_creator, name: "Challenge #{num}", description: "Super challenge number #{num}", start: Date.today, end: Date.today + 7)
-  users = User.where('id > 3')
-  challenge.users << users
-  progress_entries = (1..3).map do |num|
-    progress_entry = ProgressEntry.new
-    progress_entry.quantity = num
-    progress_entry.save
-    progress_entry
+  (1..6).each do |num|
+    User.find_or_create_by!(email: "email#{num}@gmail.com") do |u|
+      u.first_name = "User number: #{num}"
+      u.last_name = "Last name"
+    end
   end
-  challenge.progress_entries << progress_entries
-  challenge.save
+
+  admin = User.find_or_create_by!(email: 'admin@gmail.com') do |u|
+    u.first_name = 'Admin'
+    u.last_name  = 'Admin'
+    u.role       = 'admin' if u.respond_to?(:role)
+  end
+
+  challenge_creator = User.find_or_create_by!(email: 'challenge_creator@gmail.com') do |u|
+    u.first_name = 'Challenge'
+    u.last_name  = 'Creator'
+    u.role       = 'challenge-creator' if u.respond_to?(:role)
+  end
+
+  # Badges 
+  (1..10).each do |num|
+    Badge.find_or_create_by!(name: "Badge #{num}")
+  end
+
+  # Challenges 
+  (1..5).each do |num|
+    challenge = Challenge.find_or_create_by!(
+      name: "Challenge #{num}",
+      user: challenge_creator
+    ) do |c|
+      c.description = "Super challenge number #{num}"
+      c.start = Date.today
+      c.end = Date.today + 7
+    end
+
+    # Participantes, todos los usuarios excepto los primeros 3
+    users = User.where('id > 3')
+    users.each do |u|
+      ChallengeParticipation.find_or_create_by!(challenge: challenge, user: u)
+    end
+
+    # Entradas de progreso 
+    (1..3).each do |q|
+      ProgressEntry.find_or_create_by!(challenge: challenge, quantity: q)
+    end
+  end
+
+  # Asignar badges a usuarios
+  if defined?(UserBadge)
+    User.all.each do |user|
+      Badge.all.sample(2).each do |badge|
+        UserBadge.find_or_create_by!(user: user, badge: badge) do |ub|
+          ub.awarded_at = Time.current if ub.respond_to?(:awarded_at)
+        end
+      end
+    end
+  end
 end
+
+
