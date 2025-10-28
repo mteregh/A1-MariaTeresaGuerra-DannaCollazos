@@ -1,3 +1,11 @@
+<div class="d-flex gap-2 mb-3">
+  <%= link_to "Editar", edit_user_path(@user), class: "btn btn-secondary btn-sm" %>
+  <%= button_to "Eliminar", user_path(@user), method: :delete,
+        form: { data: { turbo_confirm: "¿Eliminar este usuario?" } },
+        class: "btn btn-danger btn-sm" %>
+  <%= link_to "Volver", users_path, class: "btn btn-outline-dark btn-sm" %>
+</div>
+
 <h1 class="h4 mb-3"><%= [@user.first_name, @user.last_name].compact.join(" ") %></h1>
 
 <div class="card mb-3">

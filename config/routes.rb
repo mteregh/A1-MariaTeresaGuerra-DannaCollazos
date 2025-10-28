@@ -1,13 +1,15 @@
 Rails.application.routes.draw do
-  resources :users, only: [:index, :show]
-  resources :progress_entries, only: [:index, :show]
-  resources :challenge_participations, only: [:index, :show]
-  resources :badges, only: [:index, :show]
-  resources :challenges, only: [:index, :show]
+  # CRUD completo para los modelos clave
+  resources :users
+  resources :badges
+  resources :challenges
+  resources :challenge_participations
+  resources :progress_entries
+  resources :user_badges
 
-  # Health check
+
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Root path
-  root "users#index"
+
+  root "challenges#index"  
 end

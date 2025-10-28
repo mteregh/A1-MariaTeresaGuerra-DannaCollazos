@@ -1,21 +1,39 @@
-<h1>Challenges</h1>
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Name</th>
-      <th scope="col">Start</th>
-      <th scope="col">End</th>
-      <th></th>
-    </tr>
-  </thead>
-  <% @challenges.each do |challenge| %>
-    <tr>
-      <td><%= challenge.name %></td>
-      <td><%= challenge.start %></td>
-      <td><%= challenge.end %></td>
-      <td><%= link_to "Show", challenge %></td>
-    </tr>
-  <% end %>
-  <tbody>
-  </tbody>
-</table>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h3 mb-0">Challenges</h1>
+  <%= link_to "Nuevo", new_challenge_path, class: "btn btn-primary btn-sm" %>
+</div>
+
+<% if @challenges.any? %>
+  <table class="table table-striped align-middle">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Inicio</th>
+        <th>Fin</th>
+        <th>Creador</th>
+        <th class="text-end">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @challenges.each do |challenge| %>
+        <tr>
+          <td><%= challenge.name %></td>
+          <td><%= truncate(challenge.description.to_s, length: 60) %></td>
+          <td><%= challenge.start ? l(challenge.start, format: :short) : "—" %></td>
+          <td><%= challenge.end ? l(challenge.end, format: :short) : "—" %></td>
+          <td><%= challenge.user&.first_name || "—" %></td>
+          <td class="text-end">
+            <%= link_to "Show", challenge_path(challenge), class: "btn btn-sm btn-outline-primary" %>
+            <%= link_to "Edit", edit_challenge_path(challenge), class: "btn btn-sm btn-outline-secondary" %>
+            <%= button_to "Delete", challenge_path(challenge), method: :delete,
+                  form: { data: { turbo_confirm: "¿Eliminar este challenge?" } },
+                  class: "btn btn-sm btn-outline-danger" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="alert alert-info mb-0">No hay challenges todavía.</div>
+<% end %>

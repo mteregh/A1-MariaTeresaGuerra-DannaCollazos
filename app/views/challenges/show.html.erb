@@ -1,18 +1,36 @@
-<h1>Challenge <%= @challenge.id %></h1>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h4 mb-0"><%= @challenge.name.presence || "Challenge ##{@challenge.id}" %></h1>
+  <div class="d-flex gap-2">
+    <%= link_to "Editar", edit_challenge_path(@challenge), class: "btn btn-secondary btn-sm" %>
+    <%= button_to "Eliminar", challenge_path(@challenge), method: :delete,
+          form: { data: { turbo_confirm: "¿Eliminar este challenge?" } },
+          class: "btn btn-danger btn-sm" %>
+    <%= link_to "Volver", challenges_path, class: "btn btn-outline-dark btn-sm" %>
+  </div>
+</div>
+
+<div class="card mb-3">
+  <div class="card-body">
+    <p class="mb-2"><strong>Descripción:</strong><br><%= simple_format(@challenge.description) %></p>
+    <p class="mb-1"><strong>Inicio:</strong> <%= @challenge.start ? l(@challenge.start, format: :long) : "—" %></p>
+    <p class="mb-1"><strong>Fin:</strong> <%= @challenge.end ? l(@challenge.end, format: :long) : "—" %></p>
+    <p class="mb-0"><strong>Creador:</strong>
+      <%= @challenge.user.present? ? link_to([@challenge.user.first_name, @challenge.user.last_name].compact.join(" "), user_path(@challenge.user)) : "—" %>
+    </p>
+  </div>
+</div>
+
 <div class="card">
   <div class="card-body">
-    <ul class="list-group">
-      <li class="list-group-item"><strong>Start:</strong> <%= @challenge.start %></li>
-      <li class="list-group-item"><strong>End:</strong> <%= @challenge.end %></li>
-      <li class="list-group-item"><strong>Description:</strong> <%= @challenge.description %></li>
-      <li class="list-group-item"><strong>Created at:</strong> <%= @challenge.created_at %></li>
-      <li class="list-group-item"><strong>Updated at:</strong> <%= @challenge.updated_at %></li>
-    </ul>
-    <h3>Progress Entries:</h3>
-    <ul class="list-group">
-      <% @challenge.progress_entries.each do |entry| %>  
-        <li class="list-group-item"><%= entry.quantity %></li>
-      <% end %>
+    <h2 class="h6">Progress Entries</h2>
+    <% if @challenge.progress_entries.any? %>
+      <ul class="mb-0">
+        <% @challenge.progress_entries.each do |entry| %>
+          <li>Cantidad: <%= entry.quantity %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="text-muted mb-0">Sin registros de progreso aún.</p>
+    <% end %>
   </div>
-  <%= link_to "Challenges", challenges_path %>
 </div>

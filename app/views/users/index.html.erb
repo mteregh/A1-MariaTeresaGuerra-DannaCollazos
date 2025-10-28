@@ -1,5 +1,6 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
-  <h1 class="h3 mb-0">Users</h1>
+  <h1 class="h3 mb-0">Usuarios</h1>
+  <%= link_to "Nuevo", new_user_path, class: "btn btn-primary btn-sm" %>
 </div>
 
 <% if @users.any? %>
@@ -9,7 +10,7 @@
         <th>Nombre</th>
         <th>Email</th>
         <th>Rol</th>
-        <th></th>
+        <th class="text-end">Acciones</th>
       </tr>
     </thead>
     <tbody>
@@ -17,8 +18,14 @@
         <tr>
           <td><%= [user.first_name, user.last_name].compact.join(" ") %></td>
           <td><%= user.email %></td>
-          <td><%= user.role || "—" %></td>
-          <td><%= link_to "Show", user_path(user), class: "btn btn-sm btn-primary" %></td>
+          <td><%= user.role.presence || "—" %></td>
+          <td class="text-end">
+            <%= link_to "Show", user_path(user), class: "btn btn-sm btn-outline-primary" %>
+            <%= link_to "Edit", edit_user_path(user), class: "btn btn-sm btn-outline-secondary" %>
+            <%= button_to "Delete", user_path(user), method: :delete,
+                  form: { data: { turbo_confirm: "¿Eliminar este usuario?" } },
+                  class: "btn btn-sm btn-outline-danger" %>
+          </td>
         </tr>
       <% end %>
     </tbody>
