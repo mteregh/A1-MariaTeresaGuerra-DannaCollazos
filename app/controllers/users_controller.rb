@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [ :show, :edit, :update, :destroy ]
 
   def index
     @users = User.order(:id)
@@ -13,6 +13,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    @user.password = "password"
     if @user.save
       redirect_to @user, notice: "Usuario creado correctamente."
     else
@@ -41,7 +42,6 @@ class UsersController < ApplicationController
   end
 
   def user_params
-
     params.require(:user).permit(:first_name, :last_name, :email, :role)
   end
 end

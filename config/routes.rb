@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   # CRUD completo para los modelos clave
-  resources :users
+  devise_for :users, controllers: { registrations: "users/registrations" }
+  resources :users, path: "admin/users"
   resources :badges
   resources :challenges
   resources :challenge_participations
@@ -11,5 +12,5 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
 
-  root "challenges#index"  
+  root "challenges#index" 
 end

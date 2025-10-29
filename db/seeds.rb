@@ -14,6 +14,7 @@ ActiveRecord::Base.transaction do
 
   (1..6).each do |num|
     User.find_or_create_by!(email: "email#{num}@gmail.com") do |u|
+      u.password = "password"
       u.first_name = "User number: #{num}"
       u.last_name = "Last name"
     end
@@ -21,12 +22,14 @@ ActiveRecord::Base.transaction do
 
   admin = User.find_or_create_by!(email: 'admin@gmail.com') do |u|
     u.first_name = 'Admin'
+    u.password = "password"
     u.last_name  = 'Admin'
     u.role       = 'admin' if u.respond_to?(:role)
   end
 
   challenge_creator = User.find_or_create_by!(email: 'challenge_creator@gmail.com') do |u|
     u.first_name = 'Challenge'
+    u.password = "password"
     u.last_name  = 'Creator'
     u.role       = 'challenge-creator' if u.respond_to?(:role)
   end

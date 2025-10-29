@@ -1,5 +1,17 @@
 # README
 
+
+## Troubleshooting
+
+If you had already created database for this project and you're dealing with some problems with migrations you should run the next commands:
+
+```bash
+bin/rails db:drop
+rm db/schema.rb
+bin/rails db:prepare
+bin/rails db:migrate
+```
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
