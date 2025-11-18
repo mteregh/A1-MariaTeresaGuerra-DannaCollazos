@@ -1,8 +1,9 @@
 class BadgesController < ApplicationController
   before_action :set_badge, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
 
   def index
-    @badges = Badge.order(:id)
+    @badges = @badges.order(:id)
   end
 
   def show; end

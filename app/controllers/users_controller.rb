@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [ :show, :edit, :update, :destroy ]
+  load_and_authorize_resource
 
   def index
-    @users = User.order(:id)
+    @users = @users.order(:id)
   end
 
   def show; end

@@ -1,6 +1,8 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
   <h1 class="h3 mb-0">Badges</h1>
-  <%= link_to "Nuevo", new_badge_path, class: "btn btn-primary btn-sm" %>
+  <% if can? :create, Badge %>
+    <%= link_to "Nuevo", new_badge_path, class: "btn btn-primary btn-sm" %>
+  <% end %>
 </div>
 
 <% if @badges.any? %>
@@ -20,11 +22,17 @@
           <td><%= l(badge.created_at, format: :short) %></td>
           <td><%= l(badge.updated_at, format: :short) %></td>
           <td class="text-end">
+          <% if can? :show, badge %>
             <%= link_to "Show", badge_path(badge), class: "btn btn-sm btn-outline-primary" %>
+          <% end %>
+          <% if can? :update, badge %>
             <%= link_to "Edit", edit_badge_path(badge), class: "btn btn-sm btn-outline-secondary" %>
+          <% end %>
+          <% if can? :destroy, badge %>
             <%= button_to "Delete", badge_path(badge), method: :delete,
                   form: { data: { turbo_confirm: "¿Eliminar este badge?" } },
                   class: "btn btn-sm btn-outline-danger" %>
+          <% end %>
           </td>
         </tr>
       <% end %>

@@ -1,8 +1,9 @@
 class ChallengesController < ApplicationController
-  before_action :set_challenge, only: [:show, :edit, :update, :destroy]
+  before_action :set_challenge, only: [ :show, :edit, :update, :destroy ]
+  load_and_authorize_resource
 
   def index
-    @challenges = Challenge.includes(:user).order(:id)
+    @challenges = @challenges.includes(:user).order(:id)
   end
 
   def show; end
@@ -13,6 +14,7 @@ class ChallengesController < ApplicationController
 
   def create
     @challenge = Challenge.new(challenge_params)
+    @challenge.user = current_user
     if @challenge.save
       redirect_to @challenge, notice: "Challenge creado correctamente."
     else
@@ -42,6 +44,6 @@ class ChallengesController < ApplicationController
   end
 
   def challenge_params
-    params.require(:challenge).permit(:name, :description, :start, :end, :user_id)
+    params.require(:challenge).permit(:name, :description, :start, :end)
   end
 end

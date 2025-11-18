@@ -1,10 +1,20 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
   <h1 class="h4 mb-0"><%= @challenge.name.presence || "Challenge ##{@challenge.id}" %></h1>
   <div class="d-flex gap-2">
-    <%= link_to "Editar", edit_challenge_path(@challenge), class: "btn btn-secondary btn-sm" %>
-    <%= button_to "Eliminar", challenge_path(@challenge), method: :delete,
-          form: { data: { turbo_confirm: "¿Eliminar este challenge?" } },
-          class: "btn btn-danger btn-sm" %>
+    <% if @challenge.users.include? current_user %>
+      <%= button_to "Register progress", challenge_participation_path(ChallengeParticipation.find_by(user: current_user, challenge: @challenge)), method: :put, class: "btn btn-secondary" %>
+      <%= button_to "Leave", challenge_participation_path(ChallengeParticipation.find_by(user: current_user, challenge: @challenge)), method: :delete, class: "btn btn-danger" %>
+    <% elsif can? :create, ChallengeParticipation %>
+      <%= button_to "Join", challenge_participations_path(params: { challenge_id: @challenge.id }), method: :post, class: "btn btn-primary" %>
+    <% end %>
+    <% if can? :update, @challenge %>
+      <%= link_to "Editar", edit_challenge_path(@challenge), class: "btn btn-secondary btn-sm" %>
+    <% end %>
+    <% if can? :destroy, @challenge %>
+      <%= button_to "Eliminar", challenge_path(@challenge), method: :delete,
+            form: { data: { turbo_confirm: "¿Eliminar este challenge?" } },
+            class: "btn btn-danger btn-sm" %>
+    <% end %>
     <%= link_to "Volver", challenges_path, class: "btn btn-outline-dark btn-sm" %>
   </div>
 </div>
@@ -15,7 +25,15 @@
     <p class="mb-1"><strong>Inicio:</strong> <%= @challenge.start ? l(@challenge.start, format: :long) : "—" %></p>
     <p class="mb-1"><strong>Fin:</strong> <%= @challenge.end ? l(@challenge.end, format: :long) : "—" %></p>
     <p class="mb-0"><strong>Creador:</strong>
-      <%= @challenge.user.present? ? link_to([@challenge.user.first_name, @challenge.user.last_name].compact.join(" "), user_path(@challenge.user)) : "—" %>
+    <% if @challenge.user.present? %>
+      <% if can? :show, @challenge.user %>
+        <%= link_to [@challenge.user.first_name, @challenge.user.last_name].join(" "), user_path(@challenge.user) %>
+      <% else %>
+        <%= [@challenge.user.first_name, @challenge.user.last_name].join(" ") %>
+      <% end %>
+    <% else %>
+      <%= '-' %>
+    <% end %>
     </p>
   </div>
 </div>
@@ -23,14 +41,71 @@
 <div class="card">
   <div class="card-body">
     <h2 class="h6">Progress Entries</h2>
+      <% if can? :create, ProgressEntry.new(challenge: @challenge) %>
+        <%= form_with model: ProgressEntry, class: "row" do |f| %>
+          <div class="col">
+            <%= f.number_field :quantity, value: 0, min: 0, class: "form-control mb-2 mr-sm-2" %>
+            <%= f.hidden_field :challenge_id, value: @challenge.id %>
+          </div>
+          <div class="col">
+            <%= f.submit "Add progress entry", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      <% end %>
     <% if @challenge.progress_entries.any? %>
       <ul class="mb-0">
         <% @challenge.progress_entries.each do |entry| %>
-          <li>Cantidad: <%= entry.quantity %></li>
+          <li>
+            <% if can? :update, entry %>
+              <%= form_with model: entry, class: "row" do |f| %>
+                <div class="col">
+                  <%= f.number_field :quantity, min: 0, class: "form-control mb-2 mr-sm-2" %>
+                </div>
+                <div class="col">
+                  <%= f.submit "Update", class: "btn btn-primary" %>
+                </div>
+              <% end %>
+            <% else %>
+              Cantidad: <%= entry.quantity %>
+            <% end %>
+            <% if can? :destroy, entry %>
+              <%= button_to "Delete", progress_entry_path(entry), method: :delete, class: "btn btn-danger" %>
+            <% end %>
+          </li>
         <% end %>
       </ul>
     <% else %>
       <p class="text-muted mb-0">Sin registros de progreso aún.</p>
+    <% end %>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <h2 class="h2">Participants</h2>
+    <% if @challenge.users.any? %>
+      <table class="table table-striped align-middle">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @challenge.users.each do |user| %>
+            <tr>
+              <% if can? :read, user %>
+                <td><%= link_to [user.first_name, user.last_name].compact.join(" "), user_path(user) %></td>
+              <% else %>
+                <td><%= [user.first_name, user.last_name].compact.join(" ") %></td>
+              <% end %>
+              <td><%= @challenge.challenge_participations.find_by(user: user).total_points  %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p class="text-muted mb-0">Sin participantes aún.</p>
     <% end %>
   </div>
 </div>

@@ -15,4 +15,12 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :first_name, presence: true, length: { maximum: 80 }
   validates :last_name,  presence: true, length: { maximum: 80 }
+
+  def admin?
+    role == "admin"
+  end
+
+  def challenge_creator?
+    role == "challenge-creator"
+  end
 end

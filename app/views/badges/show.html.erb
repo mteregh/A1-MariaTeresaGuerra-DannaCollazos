@@ -1,10 +1,14 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
   <h1 class="h4 mb-0"><%= @badge.name %></h1>
   <div class="d-flex gap-2">
-    <%= link_to "Editar", edit_badge_path(@badge), class: "btn btn-secondary btn-sm" %>
-    <%= button_to "Eliminar", badge_path(@badge), method: :delete,
-          form: { data: { turbo_confirm: "¿Eliminar este badge?" } },
-          class: "btn btn-danger btn-sm" %>
+    <% if can? :update, @badge %>
+      <%= link_to "Editar", edit_badge_path(@badge), class: "btn btn-secondary btn-sm" %>
+    <% end %>
+    <% if can? :destroy, @badge %>
+      <%= button_to "Eliminar", badge_path(@badge), method: :delete,
+            form: { data: { turbo_confirm: "¿Eliminar este badge?" } },
+            class: "btn btn-danger btn-sm" %>
+    <% end %>
     <%= link_to "Volver", badges_path, class: "btn btn-outline-dark btn-sm" %>
   </div>
 </div>
@@ -18,7 +22,13 @@
       <h5 class="mt-3">Usuarios con este badge:</h5>
       <ul>
         <% @badge.users.each do |user| %>
-          <li><%= link_to "#{user.first_name} #{user.last_name}", user_path(user) %></li>
+          <li>
+            <% if can? :read, user %>
+              <%= link_to "#{user.first_name} #{user.last_name}", user_path(user) %>
+            <% else %>
+              <%= "#{user.first_name} #{user.last_name}" %>
+            <% end %>
+          </li>
         <% end %>
       </ul>
     <% else %>
